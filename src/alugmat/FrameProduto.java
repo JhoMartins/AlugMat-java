@@ -174,7 +174,7 @@ public class FrameProduto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -206,11 +206,11 @@ public class FrameProduto extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Cbmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(5, 5, 5))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38))
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3))
+                        .addGap(43, 43, 43))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(274, 274, 274))))
         );
@@ -293,12 +293,9 @@ public class FrameProduto extends javax.swing.JFrame {
                 ps.setString(4, p.getCaracteristicas());
 
                 ps.execute();
-                txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-                txtcd_interno.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-                txtvalor_diaria.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-                
                 carregarGrid();
-//                limpar();
+                limpar();
+                removerErros();
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -336,7 +333,7 @@ public class FrameProduto extends javax.swing.JFrame {
             ps.execute();
             
             carregarGrid();
-//            limpar();            
+            limpar();            
         }
         catch(SQLException e){
            System.out.println("ERRO: " + e.getMessage());
@@ -373,7 +370,7 @@ public class FrameProduto extends javax.swing.JFrame {
     }                                 
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                            
-//        limpar();
+        limpar();
     }                                           
 
     public int formErrors() {
@@ -392,6 +389,20 @@ public class FrameProduto extends javax.swing.JFrame {
             }
         return false;
     }
+    
+     private void limpar() {
+        txtId.setText("");
+        txtcd_interno.setText("");
+        txtdescricao.setText("");
+        txtvalor_diaria.setText("");
+        txtAreaCaracteristicas.setText("");
+    }
+     
+     private void removerErros() {
+          txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+          txtcd_interno.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+          txtvalor_diaria.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+     }
     
     /**
      * @param args the command line arguments
