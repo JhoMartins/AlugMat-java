@@ -152,6 +152,11 @@ public class FrameProduto extends javax.swing.JFrame {
         btn_cancelar.setText("Cancelar");
 
         btn_excluir.setText("Excluir");
+        btn_excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_excluirActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("ID");
 
@@ -311,6 +316,25 @@ public class FrameProduto extends javax.swing.JFrame {
 //        Cbmarca.setText((String) modelo.getValueAt(linha, 4));
         txtcaracteristicas.setText((String) modelo.getValueAt(linha, 5));
     }//GEN-LAST:event_jTableMouseClicked
+
+    private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
+               try{
+            Connection con = Conexao.Conectar();
+           
+            int id = Integer.parseInt(txtId.getText());
+            String sql = "DELETE FROM PRODUTO WHERE ID = ?";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            
+            carregarGrid();
+//            limpar();            
+        }
+        catch(SQLException e){
+           System.out.println("ERRO: " + e.getMessage());
+       }
+    }//GEN-LAST:event_btn_excluirActionPerformed
     
     private void carregarGrid(){
         try{
