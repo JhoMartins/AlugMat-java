@@ -42,6 +42,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel1.setText("ALUGMAT - Aluguel de Máquinas e Ferramentas");
 
         btnProduto.setText("Cadastro de Produtos");
+        btnProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProdutoActionPerformed(evt);
+            }
+        });
 
         btnMarca.setText("Cadastro de Marcas");
         btnMarca.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +96,12 @@ public class FramePrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutoActionPerformed
+        FrameProduto frame = new FrameProduto();
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnProdutoActionPerformed
 
     /**
      * @param args the command line arguments
