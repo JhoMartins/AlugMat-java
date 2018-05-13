@@ -132,6 +132,11 @@ public class FrameProduto extends javax.swing.JFrame {
                 "ID", "Código Interno", "Descrição", "Valor da diária", "Marca", "Caracteristicas"
             }
         ));
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -149,6 +154,8 @@ public class FrameProduto extends javax.swing.JFrame {
         btn_excluir.setText("Excluir");
 
         jLabel7.setText("ID");
+
+        txtId.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,10 +269,10 @@ public class FrameProduto extends javax.swing.JFrame {
                     sql = "INSERT INTO PRODUTO (CD_INTERNO, DESCRICAO, VALOR_DIARIA, CARACTERISTICAS) VALUES (?, ?, ?, ?)";
                     ps = con.prepareStatement(sql);
                 } else {
-//                    p.setId(Integer.parseInt(txtId.getText()));
-//                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS = ? WHERE id = ?";
-//                    ps = con.prepareStatement(sql);
-//                    ps.setInt(5, p.getId());
+                    p.setId(Integer.parseInt(txtId.getText()));
+                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS = ? WHERE id = ?";
+                    ps = con.prepareStatement(sql);
+                    ps.setInt(5, p.getId());
                 }
                 ps.setInt(1, p.getCd_interno());
                 ps.setString(2, p.getDescricao());
@@ -274,6 +281,10 @@ public class FrameProduto extends javax.swing.JFrame {
 
                 ps.execute();
                 txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                txtcd_interno.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                txtvalor_diaria.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                txtcaracteristicas.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+                
                 carregarGrid();
 //                limpar();
             }
@@ -288,6 +299,18 @@ public class FrameProduto extends javax.swing.JFrame {
         carregarGrid();
         txtdescricao.requestFocus();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+      int linha = jTable.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+        
+        txtId.setText((int) modelo.getValueAt(linha, 0) + "");
+        txtcd_interno.setText((int) modelo.getValueAt(linha, 1) + "");
+        txtdescricao.setText((String) modelo.getValueAt(linha, 2));
+        txtvalor_diaria.setText((float) modelo.getValueAt(linha, 3) + "");
+//        Cbmarca.setText((String) modelo.getValueAt(linha, 4));
+        txtcaracteristicas.setText((String) modelo.getValueAt(linha, 5));
+    }//GEN-LAST:event_jTableMouseClicked
     
     private void carregarGrid(){
         try{
@@ -316,7 +339,12 @@ public class FrameProduto extends javax.swing.JFrame {
         catch(SQLException e){
             System.out.println("ERRO: " + e.getMessage());
         }
-    }
+    }                                 
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                            
+//        limpar();
+    }                                           
+
     
     public int formErrors() {
       int erros = 0;
