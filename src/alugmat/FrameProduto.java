@@ -8,10 +8,12 @@ package alugmat;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -101,6 +103,11 @@ public class FrameProduto extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTable3);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Descrição");
 
@@ -255,11 +262,10 @@ public class FrameProduto extends javax.swing.JFrame {
                     sql = "INSERT INTO PRODUTO (CD_INTERNO, DESCRICAO, VALOR_DIARIA, CARACTERISTICAS) VALUES (?, ?, ?, ?)";
                     ps = con.prepareStatement(sql);
                 } else {
-//                    int id = Integer.parseInt(txtId.getText());
-//                    m.setId(id);
-//                    sql = "UPDATE MARCA SET DESCRICAO = ? WHERE id = ?";
+//                    p.setId(Integer.parseInt(txtId.getText()));
+//                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS = ? WHERE id = ?";
 //                    ps = con.prepareStatement(sql);
-//                    ps.setInt(2, m.getId());
+//                    ps.setInt(5, p.getId());
                 }
                 ps.setInt(1, p.getCd_interno());
                 ps.setString(2, p.getDescricao());
@@ -268,13 +274,49 @@ public class FrameProduto extends javax.swing.JFrame {
 
                 ps.execute();
                 txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-//                carregarGrid();
+                carregarGrid();
 //                limpar();
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btn_salvarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        carregarGrid();
+        txtdescricao.requestFocus();
+    }//GEN-LAST:event_formWindowOpened
+    
+    private void carregarGrid(){
+        try{
+            Connection con = Conexao.Conectar();
+            
+            String sql = "SELECT * FROM PRODUTO";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+            
+            modelo.setRowCount(0);
+            
+            while(rs.next()){
+                Produto p = new Produto();                                
+                p.setId(rs.getInt("id"));
+                p.setCd_interno(rs.getInt("cd_interno"));
+                p.setDescricao(rs.getString("descricao"));
+                p.setValor_diaria(rs.getFloat("valor_diaria"));
+                p.setCd_marca(rs.getInt("cd_marca"));
+                p.setCaracteristicas(rs.getString("caracteristicas"));
+                
+                modelo.addRow(new Object[]{p.getId(), p.getCd_interno(), p.getDescricao(), p.getValor_diaria(), p.getCd_marca(), p.getCaracteristicas()});
+            }
+        }
+        catch(SQLException e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+    }
     
     public int formErrors() {
       int erros = 0;
