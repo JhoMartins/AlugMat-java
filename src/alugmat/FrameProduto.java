@@ -50,7 +50,6 @@ public class FrameProduto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtvalor_diaria = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtcaracteristicas = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         Cbmarca = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
@@ -62,6 +61,8 @@ public class FrameProduto extends javax.swing.JFrame {
         btn_excluir = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtAreaCaracteristicas = new javax.swing.JTextArea();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,16 +163,19 @@ public class FrameProduto extends javax.swing.JFrame {
 
         txtId.setEditable(false);
 
+        txtAreaCaracteristicas.setColumns(20);
+        txtAreaCaracteristicas.setRows(5);
+        jScrollPane5.setViewportView(txtAreaCaracteristicas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4)
@@ -180,6 +184,14 @@ public class FrameProduto extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 418, Short.MAX_VALUE)
+                                        .addComponent(btn_salvar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btn_cancelar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_excluir))
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(88, 88, 88)
                                         .addComponent(jLabel6))
@@ -193,21 +205,14 @@ public class FrameProduto extends javax.swing.JFrame {
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Cbmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtcaracteristicas, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(37, 37, 37))
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 5, 5))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 701, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(274, 274, 274))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_salvar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_cancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_excluir)
-                .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,16 +243,19 @@ public class FrameProduto extends javax.swing.JFrame {
                         .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtcaracteristicas, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_salvar)
-                    .addComponent(btn_cancelar)
-                    .addComponent(btn_excluir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_salvar)
+                            .addComponent(btn_cancelar)
+                            .addComponent(btn_excluir))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -265,7 +273,7 @@ public class FrameProduto extends javax.swing.JFrame {
                 p.setCd_interno(Integer.parseInt(txtcd_interno.getText()));
                 p.setDescricao(txtdescricao.getText());
                 p.setValor_diaria(Float.parseFloat(txtvalor_diaria.getText()));
-                p.setCaracteristicas(txtcaracteristicas.getText());
+                p.setCaracteristicas(txtAreaCaracteristicas.getText());
 
                 String sql = "";
                 PreparedStatement ps = null;
@@ -288,7 +296,6 @@ public class FrameProduto extends javax.swing.JFrame {
                 txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                 txtcd_interno.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                 txtvalor_diaria.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-                txtcaracteristicas.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                 
                 carregarGrid();
 //                limpar();
@@ -314,7 +321,7 @@ public class FrameProduto extends javax.swing.JFrame {
         txtdescricao.setText((String) modelo.getValueAt(linha, 2));
         txtvalor_diaria.setText((float) modelo.getValueAt(linha, 3) + "");
 //        Cbmarca.setText((String) modelo.getValueAt(linha, 4));
-        txtcaracteristicas.setText((String) modelo.getValueAt(linha, 5));
+        txtAreaCaracteristicas.setText((String) modelo.getValueAt(linha, 5));
     }//GEN-LAST:event_jTableMouseClicked
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
@@ -369,13 +376,11 @@ public class FrameProduto extends javax.swing.JFrame {
 //        limpar();
     }                                           
 
-    
     public int formErrors() {
       int erros = 0;
       if (validarTxt(txtcd_interno, "Por favor, preencha a Descrição da Marca!")) erros++;
       if (validarTxt(txtdescricao, "Por favor, preencha a Descrição da Marca!")) erros++;
       if (validarTxt(txtvalor_diaria, "Por favor, preencha a Descrição da Marca!")) erros++;
-      if (validarTxt(txtcaracteristicas, "Por favor, preencha a Descrição da Marca!")) erros++;
       return erros;
     }
     
@@ -387,6 +392,7 @@ public class FrameProduto extends javax.swing.JFrame {
             }
         return false;
     }
+    
     /**
      * @param args the command line arguments
      */
@@ -439,12 +445,13 @@ public class FrameProduto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTable jTable;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
+    private javax.swing.JTextArea txtAreaCaracteristicas;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtcaracteristicas;
     private javax.swing.JTextField txtcd_interno;
     private javax.swing.JTextField txtdescricao;
     private javax.swing.JTextField txtvalor_diaria;
