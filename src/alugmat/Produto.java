@@ -5,6 +5,11 @@
  */
 package alugmat;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Jhonatan
@@ -20,6 +25,46 @@ public class Produto {
     /**
      * @return the id
      */
+    public int procurarMarcaID(String nome) {
+        int id = 0;
+        try {
+            Connection con = Conexao.Conectar();
+            
+            String sql = "SELECT id FROM MARCA WHERE DESCRICAO = ? LIMIT 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nome);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                id =  rs.getInt("id");
+            } 
+            return id;
+        }
+        catch(SQLException e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        return id;
+    }
+    
+    public String procurarMarcaNome() {
+        String descricao = "";
+        try {
+            Connection con = Conexao.Conectar();
+            
+            String sql = "SELECT descricao FROM MARCA WHERE ID = ? LIMIT 1";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, cd_marca);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                descricao =  rs.getString("descricao");
+            } 
+            return descricao;
+        }
+        catch(SQLException e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        return descricao;
+    }
+    
     public int getId() {
         return id;
     }

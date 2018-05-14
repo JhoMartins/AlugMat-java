@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -120,8 +123,6 @@ public class FrameProduto extends javax.swing.JFrame {
 
         jLabel5.setText("Marca");
 
-        Cbmarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -185,7 +186,7 @@ public class FrameProduto extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 418, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btn_salvar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btn_cancelar)
@@ -193,20 +194,23 @@ public class FrameProduto extends javax.swing.JFrame {
                                         .addComponent(btn_excluir))
                                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(88, 88, 88)
-                                        .addComponent(jLabel6))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtcd_interno, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtvalor_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Cbmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(88, 88, 88)
+                                                .addComponent(jLabel6))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtcd_interno, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(10, 10, 10)
+                                                .addComponent(jLabel3)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtvalor_diaria, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(10, 10, 10)
+                                                .addComponent(jLabel5)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(Cbmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 16, Short.MAX_VALUE))))
                             .addComponent(jScrollPane3))
                         .addGap(43, 43, 43))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -274,23 +278,25 @@ public class FrameProduto extends javax.swing.JFrame {
                 p.setDescricao(txtdescricao.getText());
                 p.setValor_diaria(Float.parseFloat(txtvalor_diaria.getText()));
                 p.setCaracteristicas(txtAreaCaracteristicas.getText());
+                p.setCd_marca(p.procurarMarcaID(Cbmarca.getSelectedItem() + ""));
 
                 String sql = "";
                 PreparedStatement ps = null;
 
                 if (txtId.getText().equals("")) {
-                    sql = "INSERT INTO PRODUTO (CD_INTERNO, DESCRICAO, VALOR_DIARIA, CARACTERISTICAS) VALUES (?, ?, ?, ?)";
+                    sql = "INSERT INTO PRODUTO (CD_INTERNO, DESCRICAO, VALOR_DIARIA, CARACTERISTICAS, CD_MARCA) VALUES (?, ?, ?, ?, ?)";
                     ps = con.prepareStatement(sql);
                 } else {
                     p.setId(Integer.parseInt(txtId.getText()));
-                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS = ? WHERE id = ?";
+                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS, CD_MARCA = ? WHERE id = ?";
                     ps = con.prepareStatement(sql);
-                    ps.setInt(5, p.getId());
+                    ps.setInt(6, p.getId());
                 }
                 ps.setInt(1, p.getCd_interno());
                 ps.setString(2, p.getDescricao());
                 ps.setFloat(3, p.getValor_diaria());
                 ps.setString(4, p.getCaracteristicas());
+                ps.setInt(5, p.getCd_marca());
 
                 ps.execute();
                 carregarGrid();
@@ -305,6 +311,7 @@ public class FrameProduto extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        carregarCombo();
         carregarGrid();
         txtdescricao.requestFocus();
     }//GEN-LAST:event_formWindowOpened
@@ -317,12 +324,12 @@ public class FrameProduto extends javax.swing.JFrame {
         txtcd_interno.setText((int) modelo.getValueAt(linha, 1) + "");
         txtdescricao.setText((String) modelo.getValueAt(linha, 2));
         txtvalor_diaria.setText((float) modelo.getValueAt(linha, 3) + "");
-//        Cbmarca.setText((String) modelo.getValueAt(linha, 4));
+//        Cbmarca.selected(String) modelo.getValueAt(linha, 4));;
         txtAreaCaracteristicas.setText((String) modelo.getValueAt(linha, 5));
     }//GEN-LAST:event_jTableMouseClicked
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-               try{
+        try{
             Connection con = Conexao.Conectar();
            
             int id = Integer.parseInt(txtId.getText());
@@ -342,11 +349,7 @@ public class FrameProduto extends javax.swing.JFrame {
     
     private void carregarGrid(){
         try{
-            Connection con = Conexao.Conectar();
-            
-            String sql = "SELECT * FROM PRODUTO";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = carregarProdutos();
             
             DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
             
@@ -361,13 +364,58 @@ public class FrameProduto extends javax.swing.JFrame {
                 p.setCd_marca(rs.getInt("cd_marca"));
                 p.setCaracteristicas(rs.getString("caracteristicas"));
                 
-                modelo.addRow(new Object[]{p.getId(), p.getCd_interno(), p.getDescricao(), p.getValor_diaria(), p.getCd_marca(), p.getCaracteristicas()});
+                modelo.addRow(new Object[]{p.getId(), p.getCd_interno(), p.getDescricao(), p.getValor_diaria(), p.procurarMarcaNome(), p.getCaracteristicas()});
             }
+        }
+        catch(Exception e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+    }
+    
+    private void carregarCombo() {
+        try {
+            List<String> list = new ArrayList<String>();
+            ResultSet rs = carregarMarcas();
+            while(rs.next()) {
+                list.add(rs.getString("descricao"));
+            }
+            DefaultComboBoxModel comboModel = new DefaultComboBoxModel(list.toArray());
+            Cbmarca.setModel(comboModel);
+        }
+        catch(Exception e) {
+           System.out.println("ERRO: " + e.getMessage()); 
+        }
+    }
+    
+    private ResultSet carregarMarcas() {
+        ResultSet rs = null;
+        try {
+            Connection con = Conexao.Conectar();
+            
+            String sql = "SELECT * FROM MARCA";
+            PreparedStatement ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
         }
         catch(SQLException e){
             System.out.println("ERRO: " + e.getMessage());
         }
-    }                                 
+        return rs;
+    }
+    
+    private ResultSet carregarProdutos() {
+        ResultSet rs = null;
+        try {
+            Connection con = Conexao.Conectar();
+            
+            String sql = "SELECT * FROM PRODUTO";
+            PreparedStatement ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+        }
+        catch(SQLException e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        return rs;
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                            
         limpar();
