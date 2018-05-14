@@ -66,6 +66,7 @@ public class FrameProduto extends javax.swing.JFrame {
         txtId = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         txtAreaCaracteristicas = new javax.swing.JTextArea();
+        btn_fechar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,20 +109,26 @@ public class FrameProduto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
 
-        jLabel1.setText("Descrição");
+        jLabel1.setText("Descrição:");
 
-        jLabel2.setText("Código Interno");
+        jLabel2.setText("Código Interno:");
 
-        jLabel3.setText("Valor da Diária");
+        jLabel3.setText("Valor da Diária:");
 
-        jLabel4.setText("Caracteristicas");
+        jLabel4.setText("Caracteristicas:");
 
-        jLabel5.setText("Marca");
+        jLabel5.setText("Marca:");
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,13 +167,20 @@ public class FrameProduto extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("ID");
+        jLabel7.setText("ID:");
 
         txtId.setEditable(false);
 
         txtAreaCaracteristicas.setColumns(20);
         txtAreaCaracteristicas.setRows(5);
         jScrollPane5.setViewportView(txtAreaCaracteristicas);
+
+        btn_fechar.setText("Fechar");
+        btn_fechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,13 +224,15 @@ public class FrameProduto extends javax.swing.JFrame {
                                                 .addComponent(Cbmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(txtdescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 16, Short.MAX_VALUE))))
+                                        .addGap(0, 12, Short.MAX_VALUE))))
                             .addComponent(jScrollPane3))
                         .addGap(43, 43, 43))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel9)
-                        .addGap(274, 274, 274))))
+                        .addGap(191, 191, 191)
+                        .addComponent(btn_fechar)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +243,9 @@ public class FrameProduto extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(btn_fechar))
                         .addGap(50, 50, 50)
                         .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -252,13 +270,13 @@ public class FrameProduto extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_salvar)
                             .addComponent(btn_cancelar)
                             .addComponent(btn_excluir))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -324,7 +342,7 @@ public class FrameProduto extends javax.swing.JFrame {
         txtcd_interno.setText((int) modelo.getValueAt(linha, 1) + "");
         txtdescricao.setText((String) modelo.getValueAt(linha, 2));
         txtvalor_diaria.setText((float) modelo.getValueAt(linha, 3) + "");
-//        Cbmarca.selected(String) modelo.getValueAt(linha, 4));;
+        Cbmarca.setSelectedItem((String) modelo.getValueAt(linha, 4));
         txtAreaCaracteristicas.setText((String) modelo.getValueAt(linha, 5));
     }//GEN-LAST:event_jTableMouseClicked
 
@@ -346,6 +364,20 @@ public class FrameProduto extends javax.swing.JFrame {
            System.out.println("ERRO: " + e.getMessage());
        }
     }//GEN-LAST:event_btn_excluirActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+         
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btn_fecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fecharActionPerformed
+        FramePrincipal frame = new FramePrincipal();
+        frame.setVisible(true);
+        this.dispose();      
+    }//GEN-LAST:event_btn_fecharActionPerformed
     
     private void carregarGrid(){
         try{
@@ -438,18 +470,29 @@ public class FrameProduto extends javax.swing.JFrame {
         return false;
     }
     
+    public boolean validarCombo() {
+        if (Cbmarca.getSelectedIndex() == -1) {
+                Cbmarca.setBorder(BorderFactory.createLineBorder(Color.RED));
+                Cbmarca.requestFocus();
+                return true;
+            }
+        return false;
+    }
+    
      private void limpar() {
         txtId.setText("");
         txtcd_interno.setText("");
         txtdescricao.setText("");
         txtvalor_diaria.setText("");
         txtAreaCaracteristicas.setText("");
+        Cbmarca.setSelectedIndex(0);
     }
      
      private void removerErros() {
           txtdescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
           txtcd_interno.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
           txtvalor_diaria.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+          Cbmarca.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
      }
     
     /**
@@ -491,6 +534,7 @@ public class FrameProduto extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Cbmarca;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_excluir;
+    private javax.swing.JButton btn_fechar;
     private javax.swing.JButton btn_salvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
