@@ -370,7 +370,7 @@ public class FrameProduto extends javax.swing.JFrame {
             
             carregarGrid();
             limpar();
-            JOptionPane.showMessageDialog(this, "Exclusão realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);            
+            JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);            
         }
         catch(SQLException e){
            System.out.println("ERRO: " + e.getMessage());
