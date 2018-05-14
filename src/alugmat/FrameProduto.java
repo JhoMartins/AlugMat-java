@@ -132,15 +132,20 @@ public class FrameProduto extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Código Interno", "Descrição", "Valor da diária", "Marca", "Caracteristicas"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
@@ -159,6 +164,11 @@ public class FrameProduto extends javax.swing.JFrame {
         });
 
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         btn_excluir.setText("Excluir");
         btn_excluir.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +316,7 @@ public class FrameProduto extends javax.swing.JFrame {
                     ps = con.prepareStatement(sql);
                 } else {
                     p.setId(Integer.parseInt(txtId.getText()));
-                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS, CD_MARCA = ? WHERE id = ?";
+                    sql = "UPDATE PRODUTO SET CD_INTERNO = ?, DESCRICAO = ?, VALOR_DIARIA = ?, CARACTERISTICAS = ?, CD_MARCA = ? WHERE id = ?";
                     ps = con.prepareStatement(sql);
                     ps.setInt(6, p.getId());
                 }
@@ -320,6 +330,7 @@ public class FrameProduto extends javax.swing.JFrame {
                 carregarGrid();
                 limpar();
                 removerErros();
+                JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -358,7 +369,8 @@ public class FrameProduto extends javax.swing.JFrame {
             ps.execute();
             
             carregarGrid();
-            limpar();            
+            limpar();
+            JOptionPane.showMessageDialog(this, "Exclusão realizada com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);            
         }
         catch(SQLException e){
            System.out.println("ERRO: " + e.getMessage());
@@ -378,6 +390,10 @@ public class FrameProduto extends javax.swing.JFrame {
         frame.setVisible(true);
         this.dispose();      
     }//GEN-LAST:event_btn_fecharActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        limpar();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
     
     private void carregarGrid(){
         try{

@@ -240,6 +240,7 @@ public class FrameMarca extends javax.swing.JFrame {
                 txtDescricao.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
                 carregarGrid();
                 limpar();
+                JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -265,7 +266,8 @@ public class FrameMarca extends javax.swing.JFrame {
             ps.execute();
             
             carregarGrid();
-            limpar();            
+            limpar();
+            JOptionPane.showMessageDialog(this, "Registro salvo com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);            
         }
         catch(SQLException e){
            System.out.println("ERRO: " + e.getMessage());
